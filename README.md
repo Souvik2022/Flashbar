@@ -1,3 +1,6 @@
+# Flashbar
+Tailored Popups That Tap Into Your Visitors' Mindset
+
 # ShipFast — Javascript
 
 Hey maker, it's Marc from [ShipFast](https://shipfa.st/docs) 👋

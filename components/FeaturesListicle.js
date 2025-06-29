@@ -437,13 +437,11 @@ const FeaturesListicle = () => {
           </p>
           <h2 className="font-extrabold text-3xl lg:text-5xl tracking-tight mb-8">
             {/* 💡 COPY TIP: Remind visitors about the value of your product. Why do they need it? */}
-            Supercharge your app instantly, launch faster, make $
+            Use Smart Notifications to Nudge Action Where It Matters Most
           </h2>
           <div className="text-base-content/80 leading-relaxed mb-8 lg:text-lg">
             {/* 💡 COPY TIP: Explain how your product delivers what you promise in the headline. */}
-            Login users, process payments and send emails at lightspeed. Spend
-            your time building your startup, not integrating APIs. ShipFast
-            provides you with the boilerplate code you need to launch, FAST.
+            Show tailored popups that tap into your visitors' mindset—whether they're browsing for work, health, or personal goals—and gently guide them to take the next step.
           </div>
         </div>
       </div>
@@ -462,7 +460,7 @@ const FeaturesListicle = () => {
               <span
                 className={`duration-100 ${
                   featureSelected === feature.name
-                    ? "text-primary"
+                    ? "text-[#CBED0F]"
                     : "text-base-content/30 group-hover:text-base-content/50"
                 }`}
               >
@@ -471,7 +469,7 @@ const FeaturesListicle = () => {
               <span
                 className={`font-semibold text-sm ${
                   featureSelected === feature.name
-                    ? "text-primary"
+                    ? "text-[#CBED0F]"
                     : "text-base-content/50"
                 }`}
               >

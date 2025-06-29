@@ -35,32 +35,33 @@ export default function Layout({ children }) {
   }, [router.isReady, router.pathname]);
 
   return (
-    // Most errors are catched in ErrorBondary to show a nice error page
-    <ErrorBoundary>
-      <style jsx global>{`
-        html {
-          font-family: ${font.style.fontFamily};
-        }
-      `}</style>
-      {/* Automatically show a progress bar at the top when navigating between pages */}
-      <NextNProgress
-        color={config.colors.main}
-        options={{ showSpinner: false }}
-      />
-      {children}
-      {/* Show Success/Error messages anywhere from the app with toast() */}
-      {isMounted && (
-        <Toaster
-          toastOptions={{
-            duration: 3000,
-          }}
+    <div data-theme="business">
+      <ErrorBoundary>
+        <style jsx global>{`
+          html {
+            font-family: ${font.style.fontFamily};
+          }
+        `}</style>
+        {/* Automatically show a progress bar at the top when navigating between pages */}
+        <NextNProgress
+          color={config.colors.main}
+          options={{ showSpinner: false }}
         />
-      )}
-      {/* Show tooltips if any JSX elements has these 2 attributes: data-tooltip-id="tooltip" data-tooltip-content="" */}
-      <Tooltip
-        id="tooltip"
-        className="z-[60] !opacity-100 max-w-sm shadow-lg"
-      />
-    </ErrorBoundary>
+        {children}
+        {/* Show Success/Error messages anywhere from the app with toast() */}
+        {isMounted && (
+          <Toaster
+            toastOptions={{
+              duration: 3000,
+            }}
+          />
+        )}
+        {/* Show tooltips if any JSX elements has these 2 attributes: data-tooltip-id="tooltip" data-tooltip-content="" */}
+        <Tooltip
+          id="tooltip"
+          className="z-[60] !opacity-100 max-w-sm shadow-lg"
+        />
+      </ErrorBoundary>
+    </div>
   );
 }

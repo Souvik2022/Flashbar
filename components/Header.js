@@ -2,22 +2,21 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/public/logo.png";
 import config from "@/config";
 import { ConnectKitButton } from "connectkit";
 
 const links = [
   {
-    href: "/dashboard",
-    label: "Dashboard",
+    href: "#pricing",
+    label: "Pricing",
   },
   {
-    href: "/lending",
-    label: "Invest in a Project",
+    href: "#faq",
+    label: "FAQ",
   },
   {
-    href: "/project",
-    label: "Create a Project",
+    href: "#features",
+    label: "Features",
   },
 ];
 
@@ -35,9 +34,9 @@ const Header = () => {
   }, [router.asPath]);
 
   return (
-    <header className="bg-base-200">
+    <header className="bg-transparent">
       <nav
-        className="container flex items-center justify-between px-8 py-4 mx-auto"
+        className="container flex items-center justify-between px-8 py-4 mx-auto bg-transparent backdrop-blur-md"
         aria-label="Global"
       >
         {/* Your logo/name on large screens */}
@@ -45,16 +44,17 @@ const Header = () => {
           <Link
             className="flex items-center gap-2 shrink-0 "
             href="/"
-            title={`${config.appName} hompage`}
+            title="Flashbar homepage"
           >
             <Image
-              src={logo}
-              alt={`${config.appName} logo`}
+              src="/images/flashbar.png"
+              alt="Flashbar logo"
               className="w-8"
-              placeholder="blur"
               priority={true}
+              width={32}
+              height={32}
             />
-            <span className="font-extrabold text-lg">{config.appName}</span>
+            <span className="font-extrabold text-lg">Flashbar</span>
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}
@@ -83,7 +83,7 @@ const Header = () => {
         </div>
 
         {/* Your links on large screens */}
-        <div className="hidden lg:flex lg:justify-center lg:gap-12 lg:items-center">
+        <div className="hidden lg:flex lg:justify-center lg:gap-12 lg:items-center flex-1">
           {links.map((link) => (
             <Link
               href={link.href}
@@ -109,17 +109,18 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Link
               className="flex items-center gap-2 shrink-0 "
-              title={`${config.appName} hompage`}
+              title="Flashbar homepage"
               href="/"
             >
               <Image
-                src={logo}
-                alt={`${config.appName} logo`}
+                src="/images/flashbar.png"
+                alt="Flashbar logo"
                 className="w-8"
-                placeholder="blur"
                 priority={true}
+                width={32}
+                height={32}
               />
-              <span className="font-extrabold text-lg">{config.appName}</span>
+              <span className="font-extrabold text-lg">Flashbar</span>
             </Link>
             <button
               type="button"

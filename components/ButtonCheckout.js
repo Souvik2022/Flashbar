@@ -27,14 +27,16 @@ const ButtonCheckout = ({ priceId }) => {
 
   return (
     <button
-      className="btn btn-primary btn-block group"
+      className="btn btn-block group"
+      style={{ backgroundColor: '#CBED0F', color: '#222', border: 'none' }}
       onClick={() => handlePayment()}
     >
       {isLoading ? (
         <span className="loading loading-spinner loading-xs"></span>
       ) : (
         <svg
-          className="w-5 h-5 fill-primary-content group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-200"
+          className="w-5 h-5 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-200"
+          style={{ fill: '#222' }}
           viewBox="0 0 375 509"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

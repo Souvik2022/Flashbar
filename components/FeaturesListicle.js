@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // List of features to display:
 // - name: name of the feature
@@ -6,14 +6,14 @@ import { useState, useEffect, useRef } from "react";
 // - svg: icon of the feature
 const features = [
   {
-    name: "Emails",
+    name: "Shop",
     description: (
       <>
         <ul className="space-y-1">
           {[
-            "Send transactional emails",
-            "DNS setup to avoid spam folder (DKIM, DMARC, SPF in subdomain)",
-            "Webhook to receive & forward emails",
+            "Remind them they're about to lose their chosen items",
+            "Highlight the regret of missing an exclusive deal",
+            "Show social proof that others are buying right now",
           ].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <svg
@@ -45,7 +45,7 @@ const features = [
                 clipRule="evenodd"
               />
             </svg>
-            Time saved: 2 hours
+            Time saved: 3 hours/week
           </li>
         </ul>
       </>
@@ -61,20 +61,21 @@ const features = [
       >
         <path
           strokeLinecap="round"
-          d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25"
+          strokeLinejoin="round"
+          d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
         />
       </svg>
     ),
   },
   {
-    name: "Payments",
+    name: "Tech ",
     description: (
       <>
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {[
-            "Create checkout sessions",
-            "Handle webhooks to update user's account",
-            "Tips to setup your account & reduce chargebacks",
+            "Reveal the risk of falling behind on the latest features",
+            "Show what competitors are already using successfully",
+            "Highlight the cost of staying on a free plan too long",
           ].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <svg
@@ -106,7 +107,7 @@ const features = [
                 clipRule="evenodd"
               />
             </svg>
-            Time saved: 2 hours
+            Time saved: 2 hours/week
           </li>
         </ul>
       </>
@@ -123,21 +124,20 @@ const features = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+          d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0020.75 3H3.75A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
         />
       </svg>
     ),
   },
   {
-    name: "Login",
+    name: "Health",
     description: (
       <>
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {[
-            "Magic links setup",
-            "Login with Google walkthrough",
-            "Save user data in MongoDB",
-            "Private/protected pages & API calls",
+            "Nudge them about the consequences of skipping a healthy routine",
+            "Remind them how progress slips away if they don't track",
+            "Prompt guilt about missing daily goals",
           ].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <svg
@@ -169,7 +169,7 @@ const features = [
                 clipRule="evenodd"
               />
             </svg>
-            Time saved: 3 hours
+            Time saved: 1 hour/day
           </li>
         </ul>
       </>
@@ -186,82 +186,20 @@ const features = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+          d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
         />
       </svg>
     ),
   },
   {
-    name: "Database",
+    name: "Finance",
     description: (
       <>
-        <ul className="space-y-2">
-          {["Mongoose schema", "Mongoose plugins to make your life easier"].map(
-            (item) => (
-              <li key={item} className="flex items-center gap-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-[18px] h-[18px] inline shrink-0 opacity-80"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-
-                {item}
-              </li>
-            )
-          )}
-          <li className="flex items-center gap-3 text-accent font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-[18px] h-[18px] inline shrink-0"
-            >
-              <path
-                fillRule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Time saved: 2 hours
-          </li>
-        </ul>
-      </>
-    ),
-    svg: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="w-8 h-8"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-        />
-      </svg>
-    ),
-  },
-  {
-    name: "SEO",
-    description: (
-      <>
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {[
-            "All meta tags to rank on Google",
-            "OpenGraph tags to share on social media",
-            "Automated sitemap generation to fasten Google indexing",
-            "Structured data markup for Rich Snippets",
-            "SEO-optimized UI components",
+            "Warn about potential overdrafts if they ignore alerts",
+            "Highlight how late payments hurt credit scores",
+            "Make them feel urgency about wasted money and lost savings",
           ].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <svg
@@ -293,7 +231,7 @@ const features = [
                 clipRule="evenodd"
               />
             </svg>
-            Time saved: 6 hours
+            Time saved: 2 hours/month
           </li>
         </ul>
       </>
@@ -310,20 +248,20 @@ const features = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+          d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
     ),
   },
   {
-    name: "Style",
+    name: "Productivity",
     description: (
       <>
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {[
-            "Components, animations & sections (like the pricing page below)",
-            "20+ themes with daisyUI",
-            "Automatic dark mode",
+            "Show the backlog growing every hour they delay",
+            "Remind them how unfinished tasks increase stress",
+            "Expose the cost of procrastination on their goals",
           ].map((item) => (
             <li key={item} className="flex items-center gap-3">
               <svg
@@ -355,7 +293,7 @@ const features = [
                 clipRule="evenodd"
               />
             </svg>
-            Time saved: 5 hours
+            Time saved: 4 hours/week
           </li>
         </ul>
       </>
@@ -372,7 +310,69 @@ const features = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"
+          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ),
+  },
+  {
+    name: "Education",
+    description: (
+      <>
+        <ul className="space-y-1">
+          {[
+            "Nudge them with the fear of losing learning momentum",
+            "Highlight how skipping lessons stalls their growth",
+            "Show that consistency is the difference between success and failure",
+          ].map((item) => (
+            <li key={item} className="flex items-center gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-[18px] h-[18px] inline shrink-0 opacity-80"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                  clipRule="evenodd"
+                />
+              </svg>
+
+              {item}
+            </li>
+          ))}
+          <li className="flex items-center gap-3 text-accent font-medium">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-[18px] h-[18px] inline shrink-0"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Time saved: 2 hours/week
+          </li>
+        </ul>
+      </>
+    ),
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-8 h-8"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
         />
       </svg>
     ),

@@ -5,7 +5,6 @@ export default function Document() {
   return (
     <Html lang="en" data-theme={config.colors.theme}>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content={config.colors.main} />
         <meta name="msapplication-TileColor" content={config.colors.main} />
 

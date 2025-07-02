@@ -16,7 +16,7 @@ export default function withAuth(Component) {
       if (!userIsAuthenticated) {
         router.push('/'); // Redirect to homepage if not authenticated
       }
-    }, [connectKit]);
+    }, [connectKit, router]);
 
     return (
       <ConnectKitProvider>

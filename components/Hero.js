@@ -1,6 +1,4 @@
 import TestimonialsAvatars from "./TestimonialsAvatars";
-import ButtonLead from "@/components/ButtonLead";
-import Image from "next/image";
 import { AnimatedList } from "./magicui/animated-list";
 import NotificationCard from "./NotificationCard";
 import { GetStartedButton } from "@/components/ui/get-started-button";
@@ -13,7 +11,7 @@ const Hero = () => {
         Turn visitors into customers 🤑 with wake-up call popups
         </h1>
         <p className="text-lg opacity-80 leading-relaxed">
-        Grab attention with popups that speak directly to your visitor's doubts, fears, and needs — then turn that emotional spark into confident action, guiding them exactly where you want them to go.
+        Grab attention with popups that speak directly to your visitor&rsquo;s doubts, fears, and needs — then turn that emotional spark into confident action, guiding them exactly where you want them to go.
         </p>
         <GetStartedButton />
 

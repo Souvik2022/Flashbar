@@ -15,8 +15,6 @@ const font = Inter({ subsets: ["latin"] });
 export default function Layout({ children }) {
   const router = useRouter();
 
-  const [isMounted, setIsMounted] = useState(false);
-
   // Set Crisp Chat Support
   useEffect(() => {
     if (router.isReady && config?.crisp?.id) {
@@ -49,13 +47,11 @@ export default function Layout({ children }) {
         />
         {children}
         {/* Show Success/Error messages anywhere from the app with toast() */}
-        {isMounted && (
-          <Toaster
-            toastOptions={{
-              duration: 3000,
-            }}
-          />
-        )}
+        <Toaster
+          toastOptions={{
+            duration: 3000,
+          }}
+        />
         {/* Show tooltips if any JSX elements has these 2 attributes: data-tooltip-id="tooltip" data-tooltip-content="" */}
         <Tooltip
           id="tooltip"

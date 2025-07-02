@@ -4,25 +4,25 @@ const NotReadySection = () => (
   <section className="w-full bg-base-200 py-16 px-4 text-center">
     <div className="max-w-3xl mx-auto">
       <h2 className="text-4xl md:text-5xl font-extrabold text-base-content mb-6">
-        97% of visitors aren&apos;t ready to buy
+      Most Visitors Walk Away Without Acting
       </h2>
       <p className="text-lg md:text-xl text-base-content/90 mb-12">
-        All the time and money spent on ads, SEO, and content marketing goes to waste. Potential customers leave and never come back.
+      You invest in ads, SEO, and great content, but nearly all your traffic disappears without taking any action. They browse, hesitate, and leave—often for good.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
         <div className="flex flex-col items-center">
-          <span className="text-4xl mb-2">🥲</span>
-          <span className="font-bold text-base-content">Potential customer is<br />interested</span>
+          <span className="text-4xl mb-2">👀</span>
+          <span className="font-bold text-base-content">They’re curious about your<br />offer</span>
         </div>
         <span className="hidden md:inline-block text-3xl text-base-content">⇨</span>
         <div className="flex flex-col items-center">
           <span className="text-4xl mb-2">😕</span>
-          <span className="font-bold text-base-content">Doesn&apos;t find a reason to<br /><span className="underline">buy right now</span></span>
+          <span className="font-bold text-base-content">They don’t feel enough urgency to act<br /></span>
         </div>
         <span className="hidden md:inline-block text-3xl text-base-content">⇨</span>
         <div className="flex flex-col items-center">
-          <span className="text-4xl mb-2">😁</span>
-          <span className="font-bold text-base-content">Leaves and never<br />comes back</span>
+          <span className="text-4xl mb-2">🚶🏼‍♂️</span>
+          <span className="font-bold text-base-content">They exit your site and forget<br />you exist</span>
         </div>
       </div>
     </div>

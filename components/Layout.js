@@ -1,5 +1,5 @@
 import "react-tooltip/dist/react-tooltip.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Inter } from "next/font/google";
 
 import { useRouter } from "next/router";

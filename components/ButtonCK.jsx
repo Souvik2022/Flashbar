@@ -3,7 +3,7 @@ import { ConnectKitButton } from "connectkit";
 export const ButtonCK = () => {
   return (
     <ConnectKitButton.Custom>
-      {({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
+      {({ isConnected, show, address }) => {
         return (
           <button onClick={show}>
             {isConnected ? address : "Custom Connect"}

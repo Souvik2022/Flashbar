@@ -8,7 +8,7 @@ const faqList = [
     question: "What is it?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        It's a lightweight popup tool that lets you show bold, attention-grabbing messages on your website—without writing any code. Think of it as a wake-up call for your visitors.
+        It&apos;s a lightweight popup tool that lets you show bold, attention-grabbing messages on your website—without writing any code. Think of it as a wake-up call for your visitors.
       </div>
     ),
   },
@@ -16,7 +16,7 @@ const faqList = [
     question: "What are the benefits?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        It helps you grab attention, highlight pain points, and drive more clicks, signups, or sales—exactly when visitors are most likely to bounce. Plus, it's fast, easy, and runs on any website.
+        It helps you grab attention, highlight pain points, and drive more clicks, signups, or sales—exactly when visitors are most likely to bounce. Plus, it&apos;s fast, easy, and runs on any website.
       </div>
     ),
   },
@@ -24,7 +24,7 @@ const faqList = [
     question: "Is it a subscription?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        Nope. You pay once, and it's yours forever.
+        Nope. You pay once, and it&apos;s yours forever.
       </div>
     ),
   },
@@ -40,7 +40,7 @@ const faqList = [
     question: "Do I need to code?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        Not at all. Just copy and paste a tiny JavaScript snippet into your site's &lt;head&gt; tag.
+        Not at all. Just copy and paste a tiny JavaScript snippet into your site&apos;s &lt;head&gt; tag.
       </div>
     ),
   },
@@ -56,7 +56,7 @@ const faqList = [
     question: "How does it adapt to my brand?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        You can match it to your website's look and feel with custom text, colors, emojis, and timing controls—so every popup feels like it belongs exactly where it appears.
+        You can match it to your website&apos;s look and feel with custom text, colors, emojis, and timing controls—so every popup feels like it belongs exactly where it appears.
       </div>
     ),
   },

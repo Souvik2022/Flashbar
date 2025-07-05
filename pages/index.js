@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import FeaturesListicle from "@/components/FeaturesListicle";
 import Testimonials3 from "@/components/Testimonials3";
 import NotReadySection from "@/components/NotReadySection";
-import WhyFlashbar from "@/components/WhyFlashbar";
 
 export default function Home() {
   return (

@@ -11,7 +11,7 @@ const features = [
       <>
         <ul className="space-y-1">
           {[
-            "Remind them they're about to lose their chosen items",
+            "Remind them they&apos;re about to lose their chosen items",
             "Highlight the regret of missing an exclusive deal",
             "Show social proof that others are buying right now",
           ].map((item) => (
@@ -136,7 +136,7 @@ const features = [
         <ul className="space-y-1">
           {[
             "Nudge them about the consequences of skipping a healthy routine",
-            "Remind them how progress slips away if they don't track",
+            "Remind them how progress slips away if they don&apos;t track",
             "Prompt guilt about missing daily goals",
           ].map((item) => (
             <li key={item} className="flex items-center gap-3">
@@ -437,7 +437,7 @@ const FeaturesListicle = () => {
           </h2>
           <div className="text-base-content/80 leading-relaxed mb-8 lg:text-lg">
             {/* 💡 COPY TIP: Explain how your product delivers what you promise in the headline. */}
-            Show tailored popups that tap into your visitors' mindset—whether they're browsing for work, health, or personal goals—and gently guide them to take the next step.
+            Show tailored popups that tap into your visitors&apos; mindset—whether they&apos;re browsing for work, health, or personal goals—and gently guide them to take the next step.
           </div>
         </div>
       </div>

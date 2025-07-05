@@ -12,7 +12,7 @@ const Pricing = () => {
         <div className="flex flex-col text-center w-full mb-20">
           <p className="font-medium mb-8" style={{ color: '#CBED0F' }}>Pricing</p>
           <h2 className="font-bold text-3xl lg:text-5xl tracking-tight">
-            Build SaaS apps, marketplaces, or tools with customizable components
+            Choose the perfect plan for your conversion goals
           </h2>
         </div>
 

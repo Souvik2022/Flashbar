@@ -23,18 +23,18 @@ const config = {
         //  REQUIRED - Name of the plan, displayed on the pricing page
         name: "Starter",
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
-        description: "Perfect for small projects",
+        description: "Perfect for small websites and blogs",
         // The price you want to display, the one user will be charged on Stripe.
-        price: 79,
+        price: 29,
         // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
-        priceAnchor: 99,
+        priceAnchor: 49,
         features: [
           {
-            name: "NextJS boilerplate",
+            name: "Up to 5 popup campaigns",
           },
-          { name: "User oauth" },
-          { name: "Database" },
-          { name: "Emails" },
+          { name: "Basic templates library" },
+          { name: "Email support" },
+          { name: "Analytics dashboard" },
         ],
       },
       {
@@ -44,19 +44,19 @@ const config = {
           process.env.NODE_ENV === "development"
             ? "price_1Nk4AbAxyNprDp7iXEPBvXju"
             : "price_456",
-        name: "Advanced",
-        description: "You need more power",
-        price: 99,
-        priceAnchor: 149,
+        name: "Pro",
+        description: "For growing businesses and e-commerce",
+        price: 79,
+        priceAnchor: 99,
         features: [
           {
-            name: "NextJS boilerplate",
+            name: "Unlimited popup campaigns",
           },
-          { name: "User oauth" },
-          { name: "Database" },
-          { name: "Emails" },
-          { name: "1 year of updates" },
-          { name: "24/7 support" },
+          { name: "Advanced targeting options" },
+          { name: "A/B testing" },
+          { name: "Custom templates" },
+          { name: "Priority support" },
+          { name: "Advanced analytics" },
         ],
       },
     ],

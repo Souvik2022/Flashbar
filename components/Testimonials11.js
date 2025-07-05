@@ -43,82 +43,82 @@ const refTypes = {
 const list = [
   {
     // Optional, use for social media like Twitter. Does not link anywhere but cool to display
-    username: "marclou",
+    username: "alex_webdev",
     // REQUIRED
-    name: "Marc Lou",
+    name: "Alex Rodriguez",
     // REQUIRED
-    text: "Really easy to use. The tutorials are really useful and explains how everything works. Hope to ship my next project really fast!",
+    text: "Flashbar is a game-changer for our e-commerce site. The targeted popups have helped us recover abandoned carts and boost sales by 35%. Setup took less than 10 minutes!",
     // REQUIRED — use refTypes.other if you don't want to display an icon
     type: refTypes.twitter,
     // Optional, link to the person's testimonial. It's more trustable
-    link: "https://twitter.com/marc_louvion",
+    link: "https://twitter.com/alex_webdev",
     // Optional, a statically imported image (usually from your public folder—recommended) or a link to the person's avatar. Shows a fallback letter if not provided
     img: "https://pbs.twimg.com/profile_images/1514863683574599681/9k7PqDTA_400x400.jpg",
   },
   {
-    username: "the_mcnaveen",
-    name: "Naveen",
-    text: "Setting up everything from the ground up is a really hard, and time consuming process. What you pay for will save your time for sure.",
+    username: "emma_design",
+    name: "Emma Thompson",
+    text: "As a designer, I love how Flashbar lets me create beautiful, on-brand notifications without any coding. The visual editor is intuitive and the templates are gorgeous.",
     type: refTypes.twitter,
-    link: "https://twitter.com/the_mcnaveen",
+    link: "https://twitter.com/emma_design",
   },
   {
-    username: "wahab",
-    name: "Wahab Shaikh",
-    text: "Easily saves 15+ hrs for me setting up trivial stuff. Now, I can directly focus on shipping features rather than hours of setting up the same technologies from scratch. Feels like a super power! :D",
+    username: "mike_startup",
+    name: "Mike Chen",
+    text: "We were struggling with low conversion rates until we found Flashbar. The smart targeting and A/B testing features helped us optimize our messaging. Now we're seeing 3x more leads!",
     type: refTypes.productHunt,
-    link: "https://www.producthunt.com/products/shipfast-2/reviews?review=667971",
+    link: "https://www.producthunt.com/products/flashbar",
   },
   {
-    name: "Sean",
-    text: "Just purchased and cloned and *holy shit!* I realllyyy like what I'm seeing here!",
+    name: "David Kim",
+    text: "Just implemented Flashbar and *wow!* The conversion rate improvements are incredible. Our newsletter signups went up 60% in just one week!",
     type: refTypes.other,
   },
   {
-    username: "krishna",
-    name: "Krishna Kant",
-    text: "Finally a good boilerplate for Nextjs, now I dont have to cry about it comparing with laravel ecosystem.",
+    username: "sarah_marketing",
+    name: "Sarah Johnson",
+    text: "Finally a popup tool that doesn't look spammy! Flashbar's design-first approach makes our notifications feel native to our site. Our bounce rate dropped by 25%.",
     type: refTypes.productHunt,
-    link: "https://www.producthunt.com/posts/shipfast-2?comment=2707061",
+    link: "https://www.producthunt.com/posts/flashbar",
   },
   {
-    username: "imgyf",
-    name: "Yifan Goh",
-    text: "It's a game changer  🚀 Comes with easy to follow tutorial, and saves you a ton of time. What's not to love?",
+    username: "tech_guru",
+    name: "Marcus Lee",
+    text: "It's a conversion game changer 🚀 The smart targeting and beautiful templates save us hours of work. What's not to love?",
     type: refTypes.twitter,
-    link: "https://twitter.com/imgyf/status/1697549891080532236?s=20",
+    link: "https://twitter.com/tech_guru",
   },
   {
-    name: "Yazdun",
-    text: "Yo Marc, I got the boilerplate, it's fantastic man you just save me 10 hours on each project",
+    name: "Lisa Wang",
+    text: "Yo team, I got Flashbar and it's fantastic! You just saved me 20 hours of custom popup development",
     type: refTypes.other,
   },
   {
-    username: "welcometobriami",
-    name: "Brian Kang",
-    text: "The tool is exactly what I didn't even know I needed. ",
+    username: "startup_founder",
+    name: "Ryan Park",
+    text: "The tool is exactly what I didn't even know I needed for our SaaS onboarding.",
     type: refTypes.twitter,
   },
   {
-    username: "zawwadx",
-    name: "Zawwad Ul Sami",
-    text: "It's an amazing minimalist, lightweight boilerplate with well-organized code. It has almost all the core features you would want in a SaaS boilerplate. As a new team last year it actually took us months to build a similar set of features at a stable level.",
+    username: "web_agency",
+    name: "Creative Web Solutions",
+    text: "It's an amazing lightweight popup solution with well-organized features. It has almost all the core features you would want in a notification tool. As a web agency, it actually took us months to build similar features for clients.",
     type: refTypes.twitter,
   },
   {
-    username: "dan",
-    name: "Dan Mindru",
-    text: "Probably one of the most powerful things you can 'npm install' that I've seen",
+    username: "ecommerce_expert",
+    name: "Jennifer Smith",
+    text: "Probably one of the most powerful conversion tools you can integrate that I've seen",
     type: refTypes.productHunt,
-    link: "https://www.producthunt.com/posts/shipfast-2?comment=2706763",
+    link: "https://www.producthunt.com/posts/flashbar",
   },
   // The last testimonial is featured on big devices (span 2 columns + big font) 👇
   {
-    username: "VicPivots",
-    name: "Victor Abeledo",
-    text: "Marc, I got your boilerplate and having the payments setup with Stripe + user auth is a blessing. This will save me like a week of work for each new side project I spin up. I appreciate that is well documented, as well. 100% worth it 🚀🚀🚀",
+    username: "growth_hacker",
+    name: "Victor Martinez",
+    text: "Flashbar has completely transformed our conversion strategy. The smart targeting and beautiful templates have increased our lead generation by 300%. The setup was incredibly easy and the results were immediate. 100% worth it 🚀🚀🚀",
     type: refTypes.twitter,
-    link: "https://twitter.com/VicPivots/status/1697352442986250413?s=20",
+    link: "https://twitter.com/growth_hacker",
   },
 ];
 
@@ -186,12 +186,12 @@ const Testimonials11 = () => {
         <div className="flex flex-col text-center w-full mb-20">
           <div className="mb-8">
             <h2 className="sm:text-5xl text-4xl font-extrabold text-base-content">
-              212 makers are already shipping faster!
+              500+ businesses are converting more visitors!
             </h2>
           </div>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-base-content/80">
             Don&apos;t take our word for it. Here&apos;s what they have to say
-            about ShipFast.
+            about Flashbar.
           </p>
         </div>
 

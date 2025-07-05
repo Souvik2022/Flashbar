@@ -18,7 +18,6 @@
     "axios": "^1.4.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "connectkit": "^1.6.0",
     "crisp-sdk-web": "^1.0.21",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
@@ -41,9 +40,7 @@
     "react-tooltip": "^5.21.1",
     "stripe": "^13.2.0",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7",
-    "viem": "^2.31.4",
-    "wagmi": "^2.15.6"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.15",

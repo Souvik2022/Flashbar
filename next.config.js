@@ -9,6 +9,29 @@ const nextConfig = {
       "logos-world.net",
     ],
   },
+  webpack: (config, { isServer }) => {
+    // Handle HeartbeatWorker module issue
+    config.module.rules.push({
+      test: /HeartbeatWorker/,
+      type: 'javascript/auto',
+    });
+    
+    // Configure Terser to handle ES modules
+    config.optimization.minimizer.forEach((minimizer) => {
+      if (minimizer.constructor.name === 'TerserPlugin') {
+        minimizer.options.terserOptions = {
+          ...minimizer.options.terserOptions,
+          module: true,
+          parse: {
+            ...minimizer.options.terserOptions?.parse,
+            ecma: 2020,
+          },
+        };
+      }
+    });
+    
+    return config;
+  },
 };
 
 module.exports = nextConfig;

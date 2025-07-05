@@ -1,28 +1,23 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { ConnectKitProvider, ConnectKitButton, useConnectKit } from 'connectkit';
 
-export default function withAuth(Component) {
-  return function ProtectedRoute(props) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+// A HOC that redirects to the homepage if the user is not authenticated
+// You can use this to protect pages that require authentication
+const withAuth = (WrappedComponent) => {
+  return function AuthenticatedComponent(props) {
     const router = useRouter();
-    const connectKit = useConnectKit();
 
     useEffect(() => {
-      // Check if user is authenticated here
-      const userIsAuthenticated = connectKit.isConnected;
-      setIsAuthenticated(userIsAuthenticated);
-
-      if (!userIsAuthenticated) {
+      // For now, just redirect to homepage
+      // You can add your authentication logic here
+      const isAuthenticated = false; // Replace with your auth check
+      if (!isAuthenticated) {
         router.push('/'); // Redirect to homepage if not authenticated
       }
-    }, [connectKit, router]);
+    }, [router]);
 
-    return (
-      <ConnectKitProvider>
-        {isAuthenticated && <Component {...props} />}
-        {!isAuthenticated && <ConnectKitButton />}
-      </ConnectKitProvider>
-    );
+    return <WrappedComponent {...props} />;
   };
-}
+};
+
+export default withAuth;

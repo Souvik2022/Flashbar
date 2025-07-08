@@ -7,17 +7,17 @@ const NotReadySection = () => (
       Most Visitors Walk Away Without Acting
       </h2>
       <p className="text-lg md:text-xl text-base-content/90 mb-12">
-      You invest in ads, SEO, and great content, but nearly all your traffic disappears without taking any action. They browse, hesitate, and leave—often for good.
+      You invest in ads, SEO, and great content, but nearly all your traffic disappears without taking any action. They browse, hesitate, and leave&mdash;often for good.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
         <div className="flex flex-col items-center">
           <span className="text-4xl mb-2">👀</span>
-          <span className="font-bold text-base-content">They're curious about your<br />offer</span>
+          <span className="font-bold text-base-content">They&apos;re curious about your<br />offer</span>
         </div>
         <span className="hidden md:inline-block text-3xl text-base-content">⇨</span>
         <div className="flex flex-col items-center">
           <span className="text-4xl mb-2">😕</span>
-          <span className="font-bold text-base-content">They don't feel enough urgency to act<br /></span>
+          <span className="font-bold text-base-content">They don&apos;t feel enough urgency to act<br /></span>
         </div>
         <span className="hidden md:inline-block text-3xl text-base-content">⇨</span>
         <div className="flex flex-col items-center">

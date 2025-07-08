@@ -9,6 +9,7 @@ import { Crisp } from "crisp-sdk-web";
 import { Tooltip } from "react-tooltip";
 import ErrorBoundary from "./ErrorBoundary";
 import config from "@/config";
+import Navbar from "./Header";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -40,12 +41,15 @@ export default function Layout({ children }) {
             font-family: ${font.style.fontFamily};
           }
         `}</style>
+        <Navbar />
         {/* Automatically show a progress bar at the top when navigating between pages */}
         <NextNProgress
           color={config.colors.main}
           options={{ showSpinner: false }}
         />
-        {children}
+        <div className="pt-24">{/* Add padding to prevent content underlap */}
+          {children}
+        </div>
         {/* Show Success/Error messages anywhere from the app with toast() */}
         <Toaster
           toastOptions={{

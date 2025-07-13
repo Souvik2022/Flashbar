@@ -30,7 +30,7 @@ const Footer = () => {
             </Link>
 
             <p className="mt-3 text-sm text-base-content/80">
-              Ship your startup in days, not weeks
+              Turn visitors into customers with attention-grabbing popup notifications
             </p>
             <p className="mt-3 text-sm text-base-content/60">
               Copyright © {new Date().getFullYear()} - All rights reserved
@@ -43,16 +43,14 @@ const Footer = () => {
               </div>
 
               <div className="flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm">
-                {config.mailgun.supportEmail && (
-                  <a
-                    href={`mailto:${config.mailgun.supportEmail}`}
-                    target="_blank"
-                    className="link link-hover"
-                    aria-label="Contact Support"
-                  >
-                    Support
-                  </a>
-                )}
+                <a
+                  href="mailto:panditsouvik50@gmail.com"
+                  target="_blank"
+                  className="link link-hover"
+                  aria-label="Contact Support"
+                >
+                  Contact Us
+                </a>
                 <Link href="/#pricing" className="link link-hover">
                   Pricing
                 </Link>

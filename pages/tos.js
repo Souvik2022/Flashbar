@@ -48,47 +48,96 @@ const TOS = () => {
           </svg>
           Back
         </Link>
-        <h1 className="text-3xl font-bold pb-6">Privacy Policy for ShipFast</h1>
+        <h1 className="text-3xl font-bold pb-6">Terms and Conditions for Flashbar</h1>
 
         <pre
           className="leading-relaxed whitespace-pre-wrap"
           style={{ fontFamily: "sans-serif" }}
         >
-          {`Last Updated: August 25, 2023
+          {`Last Updated: December 19, 2025
 
-This Privacy Policy describes how ShipFast ("we", "us", or "our") collects, uses, and protects the personal and non-personal information you provide on the ShipFast website (https://shipfa.st) and any related services. By accessing or using our website, you consent to the practices described in this policy.
+This Terms and Conditions agreement describes the terms and conditions for using Flashbar ("we", "us", or "our") and our website. By accessing or using our website and services, you agree to be bound by these terms.
 
-1. Information Collection
+1. Service Description
 
-We collect the following types of information:
+Flashbar is a popup notification tool that helps website owners create attention-grabbing messages to improve conversion rates. Our service includes:
+- Popup notification creation and management
+- Analytics and tracking features
+- Customization options for branding
+- Technical support and documentation
 
-Personal Information: When you purchase a package on ShipFast, we collect your name, email address, and payment information. This information is used to process your order, provide customer support, and send important updates related to your purchase.
+2. User Accounts and Registration
 
-Non-Personal Information: We may use web cookies to gather non-personal information such as your IP address, browser type, and referring pages. This helps us improve our website and tailor your experience.
+To use certain features of Flashbar, you may need to create an account. You are responsible for:
+- Providing accurate and complete information
+- Maintaining the security of your account credentials
+- All activities that occur under your account
+- Notifying us immediately of any unauthorized use
 
-2. Ownership and Usage Rights
+3. Payment Terms
 
-When you purchase a package from ShipFast, you gain ownership of the code provided in the package. However, you do not have the right to resell or distribute the code as a standalone product. You can request a full refund within 7 days of your purchase if you are not satisfied with the product.
+- All prices are listed in USD
+- Payment is required upfront for all services
+- We offer a 7-day money-back guarantee
+- Refunds will be processed within 5-7 business days
+- No refunds after 7 days from purchase date
 
-3. Data Security
+4. License and Usage Rights
 
-We are committed to protecting your personal information. We use appropriate security measures to safeguard your data from unauthorized access, alteration, disclosure, or destruction.
+When you purchase Flashbar, you receive:
+- A license to use the popup notification tool
+- Access to our dashboard and features
+- Technical support during your subscription period
+- The right to use the service for your own websites
 
-4. Governing Law
+You may NOT:
+- Resell or redistribute our service
+- Reverse engineer our code
+- Use our service for illegal activities
+- Share your account credentials with others
 
-This Privacy Policy is governed by the laws of France.
+5. User Responsibilities
 
-5. Updates to the Privacy Policy
+You agree to:
+- Use our service only for lawful purposes
+- Not interfere with the proper functioning of our service
+- Not attempt to gain unauthorized access to our systems
+- Comply with all applicable laws and regulations
+- Respect the intellectual property rights of others
 
-We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Changes will be effective as soon as the revised policy is posted on our website. We will notify you of any significant changes via email.
+6. Privacy and Data Protection
 
-For more details about our data collection, usage, and protection practices, please review our full Privacy Policy at https://shipfa.st/privacy-policy.
+Your privacy is important to us. We collect and process personal data as described in our Privacy Policy. By using our service, you consent to our data practices as outlined in our Privacy Policy.
 
-If you have any questions or concerns about this Privacy Policy, please contact us at marc@shipfa.st.
+7. Limitation of Liability
 
-Thank you for using ShipFast!
+To the maximum extent permitted by law, Flashbar shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or use.
 
-Date: August 25, 2023`}
+8. Termination
+
+We may terminate or suspend your account and access to our service at any time, with or without cause, with or without notice. Upon termination, your right to use the service will cease immediately.
+
+9. Changes to Terms
+
+We reserve the right to modify these terms at any time. We will notify users of any material changes via email. Your continued use of the service after such changes constitutes acceptance of the new terms.
+
+10. Governing Law
+
+These terms shall be governed by and construed in accordance with the laws of the jurisdiction where Flashbar operates.
+
+11. Contact Information
+
+For questions about these Terms and Conditions, please contact us at:
+
+Email: panditsouvik50@gmail.com
+
+12. Severability
+
+If any provision of these terms is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary so that these terms will otherwise remain in full force and effect.
+
+By using Flashbar, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+
+Date: December 19, 2025`}
         </pre>
       </div>
     </div>

@@ -59,7 +59,7 @@ export function Navbar() {
   );
 
   const navLinksData = [
-    { label: 'Home', href: '#home' },
+    { label: 'Dashboard', href: '/dashboard' },
     { label: 'Problem', href: '#problem' },
     { label: 'Features', href: '#features' },
     { label: 'Testimonials', href: '#testimonials' },

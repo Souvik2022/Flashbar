@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Image from "next/image";
 
 const DEFAULT_WEBSITES = [
   { id: 1, name: "zenvoice.io" },
@@ -135,7 +136,7 @@ export default function Dashboard() {
   const handleUpdate = () => {
     // Generate a working snippet with all notification data and config as JSON in a data attribute
     const data = JSON.stringify({
-      notifications: notifications.map(({id, ...rest}) => rest),
+      notifications: notifications.map(({id: _, ...rest}) => rest),
       config,
     });
     const code = `<script defer data-domain="${websiteName}" data-flashbar='${data.replace(/'/g, "&#39;")}' src="https://flashbar.co/js/script.js"></script>`;
@@ -147,7 +148,9 @@ export default function Dashboard() {
       await navigator.clipboard.writeText(snippet);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
-    } catch (err) {}
+    } catch (err) {
+      console.error('Failed to copy to clipboard:', err);
+    }
   };
 
   return (
@@ -268,7 +271,7 @@ export default function Dashboard() {
                           {/* Icon upload or emoji */}
                           <div className="w-14 h-14 rounded-xl bg-[#23232a] flex items-center justify-center border border-[#33343a] overflow-hidden cursor-pointer" onClick={() => handleIconClick(notif.id)}>
                             {notif.iconType === "image" && notif.icon ? (
-                              <img src={notif.icon} alt="icon" className="w-full h-full object-contain" />
+                              <Image src={notif.icon} alt="icon" className="w-full h-full object-contain" width={56} height={56} />
                             ) : (
                               <span className="text-2xl text-[#e5e7eb]">{notif.icon || "🖼️"}</span>
                             )}

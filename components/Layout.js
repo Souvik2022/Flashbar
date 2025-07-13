@@ -15,6 +15,7 @@ const font = Inter({ subsets: ["latin"] });
 
 export default function Layout({ children }) {
   const router = useRouter();
+  const isDashboard = router.pathname === '/dashboard';
 
   // Set Crisp Chat Support
   useEffect(() => {
@@ -41,13 +42,13 @@ export default function Layout({ children }) {
             font-family: ${font.style.fontFamily};
           }
         `}</style>
-        <Navbar />
+        {!isDashboard && <Navbar />}
         {/* Automatically show a progress bar at the top when navigating between pages */}
         <NextNProgress
           color={config.colors.main}
           options={{ showSpinner: false }}
         />
-        <div className="pt-24">{/* Add padding to prevent content underlap */}
+        <div className={isDashboard ? "" : "pt-24"}>{/* Add padding to prevent content underlap, except on dashboard */}
           {children}
         </div>
         {/* Show Success/Error messages anywhere from the app with toast() */}

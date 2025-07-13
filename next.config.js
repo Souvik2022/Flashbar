@@ -7,6 +7,7 @@ const nextConfig = {
       "pbs.twimg.com",
       "images.unsplash.com",
       "logos-world.net",
+      "upload.wikimedia.org",
     ],
   },
   webpack: (config, { isServer }) => {

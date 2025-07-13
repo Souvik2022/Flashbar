@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Head from "next/head";
+import { Analytics } from '@vercel/analytics/react';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
           <Component {...pageProps} />
         </Layout>
       )}
+      <Analytics />
     </QueryClientProvider>
   );
 }

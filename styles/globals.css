@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Clerk UI CSS layer for theming */
+@layer clerk;
+
 /* Import Bricolage Grotesque font */
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200;300;400;500;600;700;800&display=swap');
 

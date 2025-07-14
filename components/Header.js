@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from "next/image";
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, SignOutButton, useUser } from '@clerk/nextjs';
 
 const AnimatedNavLink = ({ href, children }) => {
   const defaultTextColor = 'text-gray-300';
@@ -17,9 +18,14 @@ const AnimatedNavLink = ({ href, children }) => {
 };
 
 export function Navbar() {
+  const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [headerShapeClass, setHeaderShapeClass] = useState('rounded-full');
   const shapeTimeoutRef = useRef(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const userButtonRef = useRef(null);
+
+  // Removed dropdownRef and useEffect for click outside
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -68,18 +74,22 @@ export function Navbar() {
   ];
 
   const loginButtonElement = (
-    <button className="px-4 py-2 sm:px-3 text-xs sm:text-sm border border-[#333] bg-[rgba(31,31,31,0.62)] text-gray-300 rounded-full hover:border-white/50 hover:text-white transition-colors duration-200 w-full sm:w-auto" style={{ textShadow: 'none' }}>
-      LogIn
-    </button>
+    <SignInButton mode="modal">
+      <button className="px-4 py-2 sm:px-3 text-xs sm:text-sm border border-[#333] bg-[rgba(31,31,31,0.62)] text-gray-300 rounded-full hover:border-white/50 hover:text-white transition-colors duration-200 w-full sm:w-auto" style={{ textShadow: 'none' }}>
+        LogIn
+      </button>
+    </SignInButton>
   );
 
   const signupButtonElement = (
-    <div className="relative group w-full sm:w-auto">
-      <div className="absolute inset-0 -m-2 rounded-full hidden sm:block bg-gray-100 opacity-20 filter blur-sm pointer-events-none transition-all duration-300 ease-out group-hover:opacity-40 group-hover:blur-md group-hover:-m-2.5"></div>
-      <button className="relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-black bg-gradient-to-br from-gray-100 to-gray-300 rounded-full hover:from-gray-200 hover:to-gray-400 transition-all duration-200 w-full sm:w-auto" style={{ textShadow: 'none' }}>
-        Signup
-      </button>
-    </div>
+    <SignUpButton mode="modal">
+      <div className="relative group w-full sm:w-auto">
+        <div className="absolute inset-0 -m-2 rounded-full hidden sm:block bg-gray-100 opacity-20 filter blur-sm pointer-events-none transition-all duration-300 ease-out group-hover:opacity-40 group-hover:blur-md group-hover:-m-2.5"></div>
+        <button className="relative z-10 px-4 py-2 sm:px-3 text-xs sm:text-sm font-semibold text-black bg-gradient-to-br from-gray-100 to-gray-300 rounded-full hover:from-gray-200 hover:to-gray-400 transition-all duration-200 w-full sm:w-auto" style={{ textShadow: 'none' }}>
+          Signup
+        </button>
+      </div>
+    </SignUpButton>
   );
 
   return (
@@ -105,8 +115,43 @@ export function Navbar() {
           ))}
         </nav>
         <div className="hidden sm:flex items-center gap-2 sm:gap-3">
-          {loginButtonElement}
-          {signupButtonElement}
+          <SignedOut>
+            {loginButtonElement}
+            {signupButtonElement}
+          </SignedOut>
+          <SignedIn>
+            <div className="flex items-center gap-2 relative">
+              <div className="w-8 h-8 bg-[#C0EA00] rounded-full flex items-center justify-center">
+                <span className="text-[#23232a] font-bold text-sm">
+                  {user?.firstName?.charAt(0).toUpperCase()}
+                </span>
+              </div>
+              <button
+                ref={userButtonRef}
+                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium focus:outline-none"
+                style={{ textShadow: 'none' }}
+                onClick={() => setShowDropdown((prev) => !prev)}
+                aria-haspopup="true"
+                aria-expanded={showDropdown}
+              >
+                {user?.firstName || user?.username || user?.email}
+              </button>
+              {showDropdown && (
+                <div
+                  className="absolute right-0 top-10 bg-[#1f1f1f] border border-[#333] rounded-lg shadow-lg py-2 px-4 z-50 min-w-[120px]"
+                >
+                  <SignOutButton>
+                    <button
+                      className="w-full text-left text-gray-300 hover:text-white py-1 px-2 transition-colors duration-200"
+                      onClick={() => setShowDropdown(false)}
+                    >
+                      Logout
+                    </button>
+                  </SignOutButton>
+                </div>
+              )}
+            </div>
+          </SignedIn>
         </div>
         <button className="sm:hidden flex items-center justify-center w-8 h-8 text-gray-300 focus:outline-none" onClick={toggleMenu} aria-label={isOpen ? 'Close Menu' : 'Open Menu'}>
           {isOpen ? (
@@ -126,10 +171,12 @@ export function Navbar() {
             </a>
           ))}
         </nav>
-        <div className="flex flex-col items-center space-y-4 mt-4 w-full">
-          {loginButtonElement}
-          {signupButtonElement}
-        </div>
+        <SignedOut>
+          <div className="flex flex-col items-center space-y-4 mt-4 w-full">
+            {loginButtonElement}
+            {signupButtonElement}
+          </div>
+        </SignedOut>
       </div>
     </header>
   );

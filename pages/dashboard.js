@@ -16,6 +16,7 @@ import { CSS } from '@dnd-kit/utilities';
 import Image from "next/image";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUser, SignedIn, SignedOut, SignInButton, SignUpButton, SignOutButton } from '@clerk/nextjs';
+import Link from 'next/link';
 
 const DEFAULT_WEBSITES = [
   { id: 1, name: "zenvoice.io" },
@@ -48,7 +49,7 @@ const DEFAULT_CONFIG = {
 };
 
 // Move SortableNotification to module scope
-function SortableNotification({ notif, idx, onIconClick, onNotificationChange, onDeleteNotification, fileInputRefs, handleIconUpload, isDragging }) {
+function SortableNotification({ notif, onIconClick, onNotificationChange, onDeleteNotification, fileInputRefs, handleIconUpload }) {
   const {
     attributes,
     listeners,
@@ -151,7 +152,6 @@ export default function Dashboard() {
   const [snippet, setSnippet] = useState("");
   const [copied, setCopied] = useState(false);
   const [showTestNotification, setShowTestNotification] = useState(false);
-  const [testNotificationIndex, setTestNotificationIndex] = useState(0);
   const [shownTestNotifications, setShownTestNotifications] = useState([]);
   const testNotificationTimeout = useRef(null);
   const fileInputRefs = useRef({});
@@ -272,7 +272,7 @@ export default function Dashboard() {
   const handleUpdate = () => {
     // Generate a working snippet with all notification data and config as JSON in a data attribute
     const data = JSON.stringify({
-      notifications: notifications.map(({id: _, ...rest}) => rest),
+      notifications: notifications.map(({id, ...rest}) => rest),
       config,
     });
     const code = `<script defer data-domain="${websiteName}" data-flashbar='${data.replace(/'/g, "&#39;")}' src="https://flashbar.co/js/script.js"></script>`;
@@ -295,7 +295,6 @@ export default function Dashboard() {
     setShownTestNotifications([]);
     setTimeout(() => {
       setShowTestNotification(true);
-      setTestNotificationIndex(0);
       setShownTestNotifications([0]);
       if (testNotificationTimeout.current) clearTimeout(testNotificationTimeout.current);
       showNextTestNotification(0);
@@ -304,7 +303,6 @@ export default function Dashboard() {
 
   const showNextTestNotification = (index) => {
     setShowTestNotification(true);
-    setTestNotificationIndex(index);
     setShownTestNotifications((prev) => {
       if (!prev.includes(index)) return [index, ...prev]; // insert at top
       return prev;
@@ -341,7 +339,7 @@ export default function Dashboard() {
       <header className="bg-[#23232a] border-b border-[#33343a] px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Flashbar Logo */}
-          <a href="/" className="flex items-center gap-3" style={{ textDecoration: 'none' }}>
+          <Link href="/" className="flex items-center gap-3" style={{ textDecoration: 'none' }}>
             <Image
               src="/images/flashbar.png"
               alt="Flashbar logo"
@@ -350,7 +348,7 @@ export default function Dashboard() {
               className="w-8 h-8 object-contain"
             />
             <span className="text-xl font-bold text-[#f3f4f6]">Flashbar</span>
-          </a>
+          </Link>
           {/* Right side - Account and Test Button */}
           <div className="flex items-center gap-4">
             {/* Account Name */}
@@ -596,7 +594,6 @@ export default function Dashboard() {
                     <SortableNotification
                       key={notif.id.toString()}
                       notif={notif}
-                      idx={idx}
                       onIconClick={handleIconClick}
                       onNotificationChange={handleNotificationChange}
                       onDeleteNotification={handleDeleteNotification}

@@ -1,7 +1,21 @@
 import React, { useState, useRef } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import Image from "next/image";
 import { AnimatePresence, motion } from 'framer-motion';
+import { useUser, SignedIn, SignedOut, SignInButton, SignUpButton, SignOutButton } from '@clerk/nextjs';
 
 const DEFAULT_WEBSITES = [
   { id: 1, name: "zenvoice.io" },
@@ -11,7 +25,7 @@ const DEFAULT_WEBSITES = [
 const DEFAULT_NOTIFICATIONS = [
   {
     id: 1,
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png",
+    icon: "/images/placeholder.svg",
     title: "Angry Customer",
     message: "WHERE IS MY INVOIZE?",
     time: "1m",
@@ -19,7 +33,7 @@ const DEFAULT_NOTIFICATIONS = [
   },
   {
     id: 2,
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Stripe_Logo%2C_revised_2016.png",
+    icon: "/images/placeholder.svg",
     title: "Stripe: Refund ⚠️",
     message: "Reason: Invoice not provided",
     time: "now",
@@ -33,7 +47,96 @@ const DEFAULT_CONFIG = {
   hideAfter: 200000,
 };
 
+// Move SortableNotification to module scope
+function SortableNotification({ notif, idx, onIconClick, onNotificationChange, onDeleteNotification, fileInputRefs, handleIconUpload, isDragging }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging: dndDragging
+  } = useSortable({ id: notif.id.toString() });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: dndDragging ? 99 : 'auto',
+    opacity: dndDragging ? 0.7 : 1,
+  };
+
+  return (
+    <li
+      ref={setNodeRef}
+      style={style}
+      className={`bg-[#18181b] rounded-2xl p-6 flex items-center gap-4 shadow border border-[#33343a] relative transition ${dndDragging ? "ring-2 ring-[#C0EA00]" : ""}`}
+    >
+      {/* Drag handle (triple dot) */}
+      <span {...attributes} className="flex flex-col justify-center items-center mr-1 select-none">
+        <button type="button" {...listeners} tabIndex={-1} aria-label="Drag notification" className="flex flex-col justify-center items-center cursor-move p-0 m-0 bg-transparent border-none outline-none">
+          <span className="block w-1 h-1 bg-[#6b7280] rounded-full mb-0.5"></span>
+          <span className="block w-1 h-1 bg-[#6b7280] rounded-full mb-0.5"></span>
+          <span className="block w-1 h-1 bg-[#6b7280] rounded-full"></span>
+        </button>
+      </span>
+      {/* Icon upload or emoji */}
+      <div className="w-14 h-14 rounded-xl bg-[#23232a] flex items-center justify-center border border-[#33343a] overflow-hidden cursor-pointer" onClick={() => onIconClick(notif.id)}>
+        {notif.iconType === "image" && notif.icon ? (
+          notif.icon.startsWith("data:") ? (
+            <img src={notif.icon} alt="icon" className="w-full h-full object-contain" width={56} height={56} />
+          ) : (
+            <Image src={notif.icon} alt="icon" className="w-full h-full object-contain" width={56} height={56} />
+          )
+        ) : (
+          <Image src="/images/placeholder.svg" alt="default icon" width={24} height={24} style={{margin: 'auto'}} />
+        )}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          ref={el => (fileInputRefs.current[notif.id] = el)}
+          onChange={e => {
+            if (e.target.files && e.target.files[0]) handleIconUpload(notif.id, e.target.files[0]);
+          }}
+        />
+      </div>
+      {/* Notification content */}
+      <div className="flex-1 flex flex-col gap-1">
+        <input
+          aria-label="Title"
+          className="w-full font-bold text-lg px-4 py-2 rounded bg-[#23232a] border border-[#33343a] text-[#f3f4f6] mb-1 focus:outline-none focus:ring-2 focus:ring-[#C0EA00]"
+          value={notif.title}
+          onChange={e => onNotificationChange(notif.id, "title", e.target.value)}
+        />
+        <input
+          aria-label="Message"
+          className="w-full px-4 py-2 rounded bg-[#23232a] border border-[#33343a] text-[#e5e7eb] focus:outline-none focus:ring-2 focus:ring-[#C0EA00]"
+          value={notif.message}
+          onChange={e => onNotificationChange(notif.id, "message", e.target.value)}
+        />
+      </div>
+      {/* Time input */}
+      <input
+        aria-label="Time"
+        className="w-14 px-3 py-2 rounded-full border border-[#33343a] bg-[#23232a] text-[#bfae9b] font-semibold text-sm text-center focus:outline-none focus:ring-2 focus:ring-[#C0EA00]"
+        value={notif.time}
+        onChange={e => onNotificationChange(notif.id, "time", e.target.value)}
+      />
+      {/* Delete button */}
+      <button
+        aria-label="Delete notification"
+        className="flex items-center gap-1 text-[#C0EA00] hover:text-[#A5C900] text-base font-semibold ml-2 focus:outline-none"
+        onClick={() => onDeleteNotification(notif.id)}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 7V5a2 2 0 00-2-2H7a2 2 0 00-2 2v2m5 4v6m4-6v6" /></svg>
+        Delete
+      </button>
+    </li>
+  );
+}
+
 export default function Dashboard() {
+  const { user } = useUser();
   const [websites, setWebsites] = useState(DEFAULT_WEBSITES);
   const [selectedWebsiteId, setSelectedWebsiteId] = useState(websites[0].id);
   const [newWebsiteName, setNewWebsiteName] = useState("");
@@ -52,16 +155,19 @@ export default function Dashboard() {
   const [shownTestNotifications, setShownTestNotifications] = useState([]);
   const testNotificationTimeout = useRef(null);
   const fileInputRefs = useRef({});
+  // Add state for dropdown
+  const [showDropdown, setShowDropdown] = useState(false);
+  const userButtonRef = useRef(null);
 
   const notifications = notificationsByWebsite[selectedWebsiteId] || [];
   const websiteName = websites.find(w => w.id === selectedWebsiteId)?.name || "";
   const config = configByWebsite[selectedWebsiteId] || DEFAULT_CONFIG;
 
   // Mock user data
-  const user = {
-    name: "John Doe",
-    email: "john@example.com"
-  };
+  // const user = {
+  //   name: "John Doe",
+  //   email: "john@example.com"
+  // };
 
   const handleAddWebsite = () => {
     if (!newWebsiteName.trim()) return;
@@ -73,47 +179,60 @@ export default function Dashboard() {
     setConfigByWebsite(c => ({ ...c, [newId]: { ...DEFAULT_CONFIG } }));
   };
 
+  // --- Notification State Updaters ---
   const handleAddNotification = () => {
-    const newId = notifications.length ? Math.max(...notifications.map(n => n.id)) + 1 : 1;
-    const newNotif = {
-      id: newId,
-      icon: "",
-      title: "Title",
-      message: "Message...",
-      time: "now",
-      iconType: "emoji",
-    };
-    setNotificationsByWebsite(n => ({
-      ...n,
-      [selectedWebsiteId]: [...notifications, newNotif],
-    }));
+    setNotificationsByWebsite(n => {
+      const current = n[selectedWebsiteId] || [];
+      const newId = current.length ? Math.max(...current.map(nf => nf.id)) + 1 : 1;
+      const newNotif = {
+        id: newId,
+        icon: "",
+        title: "Title",
+        message: "Message...",
+        time: "now",
+        iconType: "emoji",
+      };
+      return {
+        ...n,
+        [selectedWebsiteId]: [...current, newNotif],
+      };
+    });
   };
 
   const handleDeleteNotification = (id) => {
-    setNotificationsByWebsite(n => ({
-      ...n,
-      [selectedWebsiteId]: notifications.filter(notif => notif.id !== id),
-    }));
+    setNotificationsByWebsite(n => {
+      const current = n[selectedWebsiteId] || [];
+      return {
+        ...n,
+        [selectedWebsiteId]: current.filter(notif => notif.id !== id),
+      };
+    });
   };
 
   const handleNotificationChange = (id, field, value) => {
-    setNotificationsByWebsite(n => ({
-      ...n,
-      [selectedWebsiteId]: notifications.map(notif =>
-        notif.id === id ? { ...notif, [field]: value } : notif
-      ),
-    }));
+    setNotificationsByWebsite(n => {
+      const current = n[selectedWebsiteId] || [];
+      return {
+        ...n,
+        [selectedWebsiteId]: current.map(notif =>
+          notif.id === id ? { ...notif, [field]: value } : notif
+        ),
+      };
+    });
   };
 
   const handleIconUpload = (id, file) => {
     const reader = new FileReader();
     reader.onload = e => {
-      setNotificationsByWebsite(n => ({
-        ...n,
-        [selectedWebsiteId]: notifications.map(notif =>
-          notif.id === id ? { ...notif, icon: e.target.result, iconType: "image" } : notif
-        ),
-      }));
+      setNotificationsByWebsite(n => {
+        const current = n[selectedWebsiteId] || [];
+        return {
+          ...n,
+          [selectedWebsiteId]: current.map(notif =>
+            notif.id === id ? { ...notif, icon: e.target.result, iconType: "image" } : notif
+          ),
+        };
+      });
     };
     reader.readAsDataURL(file);
   };
@@ -123,15 +242,21 @@ export default function Dashboard() {
     fileInputRefs.current[id].click();
   };
 
-  const onDragEnd = (result) => {
-    if (!result.destination) return;
-    const reordered = Array.from(notifications);
-    const [removed] = reordered.splice(result.source.index, 1);
-    reordered.splice(result.destination.index, 0, removed);
-    setNotificationsByWebsite(n => ({
-      ...n,
-      [selectedWebsiteId]: reordered,
-    }));
+  const onDragEnd = (event) => {
+    const { active, over } = event;
+    if (active && over && active.id !== over.id) {
+      setNotificationsByWebsite(n => {
+        const current = n[selectedWebsiteId] || [];
+        const oldIndex = current.findIndex(nf => nf.id.toString() === active.id);
+        const newIndex = current.findIndex(nf => nf.id.toString() === over.id);
+        if (oldIndex === -1 || newIndex === -1) return n;
+        const reordered = arrayMove(current, oldIndex, newIndex);
+        return {
+          ...n,
+          [selectedWebsiteId]: reordered,
+        };
+      });
+    }
   };
 
   const handleConfigChange = (field, value) => {
@@ -166,11 +291,15 @@ export default function Dashboard() {
 
   const handleTestNotification = () => {
     if (notifications.length === 0) return;
-    setShowTestNotification(true);
-    setTestNotificationIndex(0);
-    setShownTestNotifications([0]);
-    if (testNotificationTimeout.current) clearTimeout(testNotificationTimeout.current);
-    showNextTestNotification(0);
+    setShowTestNotification(false);
+    setShownTestNotifications([]);
+    setTimeout(() => {
+      setShowTestNotification(true);
+      setTestNotificationIndex(0);
+      setShownTestNotifications([0]);
+      if (testNotificationTimeout.current) clearTimeout(testNotificationTimeout.current);
+      showNextTestNotification(0);
+    }, config.startAfter || 0);
   };
 
   const showNextTestNotification = (index) => {
@@ -184,12 +313,25 @@ export default function Dashboard() {
     if (index < notifications.length - 1) {
       testNotificationTimeout.current = setTimeout(() => {
         showNextTestNotification(index + 1);
-      }, 2000);
+      }, config.sendEvery || 2000);
     } else {
-      testNotificationTimeout.current = setTimeout(() => {
-        setShowTestNotification(false);
-        setShownTestNotifications([]);
-      }, 2000);
+      // Hide notifications one by one from the bottom
+      let hideIndex = 0;
+      const hideNext = () => {
+        setShownTestNotifications((prev) => {
+          if (prev.length === 0) {
+            setShowTestNotification(false);
+            return [];
+          }
+          // Remove the last (bottom) notification
+          return prev.slice(0, -1);
+        });
+        hideIndex++;
+        if (hideIndex < notifications.length) {
+          testNotificationTimeout.current = setTimeout(hideNext, config.hideAfter || 2000);
+        }
+      };
+      testNotificationTimeout.current = setTimeout(hideNext, config.hideAfter || 2000);
     }
   };
 
@@ -199,7 +341,7 @@ export default function Dashboard() {
       <header className="bg-[#23232a] border-b border-[#33343a] px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Flashbar Logo */}
-          <div className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-3" style={{ textDecoration: 'none' }}>
             <Image
               src="/images/flashbar.png"
               alt="Flashbar logo"
@@ -208,20 +350,49 @@ export default function Dashboard() {
               className="w-8 h-8 object-contain"
             />
             <span className="text-xl font-bold text-[#f3f4f6]">Flashbar</span>
-          </div>
-          
+          </a>
           {/* Right side - Account and Test Button */}
           <div className="flex items-center gap-4">
             {/* Account Name */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#C0EA00] rounded-full flex items-center justify-center">
-                <span className="text-[#23232a] font-bold text-sm">
-                  {user.name.charAt(0).toUpperCase()}
-                </span>
+            <SignedIn>
+              <div className="flex items-center gap-2 relative">
+                <div className="w-8 h-8 bg-[#C0EA00] rounded-full flex items-center justify-center">
+                  <span className="text-[#23232a] font-bold text-sm">
+                    {user?.firstName?.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <button
+                  ref={userButtonRef}
+                  className="text-[#e5e7eb] font-medium focus:outline-none"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setShowDropdown((prev) => !prev)}
+                  aria-haspopup="true"
+                  aria-expanded={showDropdown}
+                >
+                  {user?.firstName || user?.username || user?.email}
+                </button>
+                {showDropdown ? (
+                  <div className="absolute right-0 top-10 bg-[#23232a] border border-[#33343a] rounded shadow-lg py-2 px-4 z-50 min-w-[120px]">
+                    <SignOutButton>
+                      <button
+                        className="w-full text-left text-[#e5e7eb] hover:text-[#C0EA00] py-1 px-2"
+                        onClick={() => setShowDropdown(false)}
+                      >
+                        Logout
+                      </button>
+                    </SignOutButton>
+                  </div>
+                ) : null}
               </div>
-              <span className="text-[#e5e7eb] font-medium">{user.name}</span>
-            </div>
-            
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="px-4 py-2 bg-[#C0EA00] text-[#23232a] font-bold rounded-lg hover:bg-[#A5C900] focus:outline-none focus:ring-2 focus:ring-[#C0EA00] transition">Sign In</button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="px-4 py-2 bg-[#23232a] text-[#C0EA00] font-bold rounded-lg border border-[#C0EA00] hover:bg-[#18181b] focus:outline-none focus:ring-2 focus:ring-[#C0EA00] transition">Sign Up</button>
+              </SignUpButton>
+            </SignedOut>
             {/* Test Button */}
             <button
               onClick={handleTestNotification}
@@ -252,17 +423,19 @@ export default function Dashboard() {
                 {/* Icon */}
                 <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center border border-[#e5e7eb] overflow-hidden">
                   {notifications[idx].iconType === "image" && notifications[idx].icon ? (
-                    <Image 
-                      src={notifications[idx].icon} 
-                      alt="icon" 
-                      className="w-full h-full object-contain" 
-                      width={56} 
-                      height={56} 
-                    />
+                    notifications[idx].icon.startsWith("data:") ? (
+                      <img src={notifications[idx].icon} alt="icon" className="w-full h-full object-contain" width={56} height={56} />
+                    ) : (
+                      <Image 
+                        src={notifications[idx].icon} 
+                        alt="icon" 
+                        className="w-full h-full object-contain" 
+                        width={56} 
+                        height={56} 
+                      />
+                    )
                   ) : (
-                    <span className="text-2xl text-[#23232a]">
-                      {notifications[idx].icon || "🖼️"}
-                    </span>
+                    <Image src="/images/placeholder.svg" alt="default icon" width={24} height={24} style={{margin: 'auto'}} />
                   )}
                 </div>
                 {/* Content */}
@@ -289,25 +462,55 @@ export default function Dashboard() {
         {/* Website Tabs */}
         <div className="w-full max-w-6xl flex items-center gap-2 mb-8">
           {websites.map(site => (
-            <button
-              key={site.id}
-              className={`px-6 py-2 rounded-t-lg border-b-2 font-bold text-base transition focus:outline-none ${selectedWebsiteId === site.id ? "bg-[#23232a] border-[#C0EA00] text-[#C0EA00]" : "bg-[#18181b] border-transparent text-[#e5e7eb] hover:bg-[#23232a]"}`}
-              onClick={() => setSelectedWebsiteId(site.id)}
-              aria-label={`Select website ${site.name}`}
-              style={{ minWidth: 120 }}
-            >
-              {site.name}
-            </button>
+            <div key={site.id} className="relative flex items-center group">
+              <button
+                className={`px-6 py-2 rounded-t-lg border-b-2 font-bold text-base transition focus:outline-none ${selectedWebsiteId === site.id ? "bg-[#23232a] border-[#C0EA00] text-[#C0EA00]" : "bg-[#18181b] border-transparent text-[#e5e7eb] hover:bg-[#23232a]"}`}
+                onClick={() => setSelectedWebsiteId(site.id)}
+                aria-label={`Select domain ${site.name}`}
+                style={{ minWidth: 120 }}
+              >
+                {site.name}
+              </button>
+              {websites.length > 1 && (
+                <button
+                  aria-label={`Remove domain ${site.name}`}
+                  className="absolute -right-2 -top-2 bg-[#23232a] border border-[#33343a] rounded-full w-6 h-6 flex items-center justify-center text-[#e5e7eb] hover:bg-[#C0EA00] hover:text-[#23232a] transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none z-10"
+                  onClick={() => {
+                    if (websites.length <= 1) return;
+                    setWebsites(ws => ws.filter(w => w.id !== site.id));
+                    setNotificationsByWebsite(n => {
+                      const copy = { ...n };
+                      delete copy[site.id];
+                      return copy;
+                    });
+                    setConfigByWebsite(c => {
+                      const copy = { ...c };
+                      delete copy[site.id];
+                      return copy;
+                    });
+                    // If the removed site was selected, select another
+                    if (selectedWebsiteId === site.id) {
+                      const remaining = websites.filter(w => w.id !== site.id);
+                      if (remaining.length > 0) setSelectedWebsiteId(remaining[0].id);
+                    }
+                  }}
+                  tabIndex={0}
+                  type="button"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              )}
+            </div>
           ))}
           {/* Add website tab */}
           <div className="flex items-center ml-2">
             <input
               type="text"
               className="px-3 py-2 rounded-l-lg border border-[#33343a] bg-[#23232a] text-[#e5e7eb] focus:outline-none focus:ring-2 focus:ring-[#C0EA00]"
-              placeholder="Add website..."
+              placeholder="Add domain name..."
               value={newWebsiteName}
               onChange={e => setNewWebsiteName(e.target.value)}
-              aria-label="New website name"
+              aria-label="New domain name"
               style={{ minWidth: 120 }}
             />
             <button
@@ -360,7 +563,7 @@ export default function Dashboard() {
             </div>
           </aside>
           {/* Right: Notification Editor */}
-          <section className="flex-1 bg-[#23232a] rounded-2xl shadow p-8 border border-[#33343a] flex flex-col items-center min-h-[400px] relative">
+          <section className="flex-1 bg-[#23232a] rounded-2xl shadow p-8 border border-[#33343a] flex flex-col items-center min-h-[400px] relative" style={{overflow: 'visible', position: 'relative'}}>
             <div className="w-full flex items-center justify-between mb-4">
               <div className="text-xl font-bold text-[#f3f4f6]">Notifications for <span className="text-[#C0EA00]">{websiteName}</span></div>
               <div className="flex items-center gap-2">
@@ -381,81 +584,29 @@ export default function Dashboard() {
                 </button>
               </div>
             </div>
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="notif-list">
-                {(provided) => (
-                  <ul className="w-full space-y-6" ref={provided.innerRef} {...provided.droppableProps}>
-                    {notifications.map((notif, idx) => (
-                      <Draggable key={notif.id} draggableId={notif.id.toString()} index={idx}>
-                        {(provided, snapshot) => (
-                          <li
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            className={`bg-[#18181b] rounded-2xl p-6 flex items-center gap-4 shadow border border-[#33343a] relative transition ${snapshot.isDragging ? "ring-2 ring-[#C0EA00]" : ""}`}
-                          >
-                            {/* Drag handle */}
-                            <span {...provided.dragHandleProps} className="flex flex-col justify-center items-center cursor-move text-[#6b7280] mr-1 select-none">
-                              <span className="block w-1 h-1 bg-[#6b7280] rounded-full mb-0.5"></span>
-                              <span className="block w-1 h-1 bg-[#6b7280] rounded-full mb-0.5"></span>
-                              <span className="block w-1 h-1 bg-[#6b7280] rounded-full"></span>
-                            </span>
-                            {/* Icon upload or emoji */}
-                            <div className="w-14 h-14 rounded-xl bg-[#23232a] flex items-center justify-center border border-[#33343a] overflow-hidden cursor-pointer" onClick={() => handleIconClick(notif.id)}>
-                              {notif.iconType === "image" && notif.icon ? (
-                                <Image src={notif.icon} alt="icon" className="w-full h-full object-contain" width={56} height={56} />
-                              ) : (
-                                <span className="text-2xl text-[#e5e7eb]">{notif.icon || "🖼️"}</span>
-                              )}
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                ref={el => (fileInputRefs.current[notif.id] = el)}
-                                onChange={e => {
-                                  if (e.target.files && e.target.files[0]) handleIconUpload(notif.id, e.target.files[0]);
-                                }}
-                              />
-                            </div>
-                            {/* Notification content */}
-                            <div className="flex-1 flex flex-col gap-1">
-                              <input
-                                aria-label="Title"
-                                className="w-full font-bold text-lg px-4 py-2 rounded bg-[#23232a] border border-[#33343a] text-[#f3f4f6] mb-1 focus:outline-none focus:ring-2 focus:ring-[#C0EA00]"
-                                value={notif.title}
-                                onChange={e => handleNotificationChange(notif.id, "title", e.target.value)}
-                              />
-                              <input
-                                aria-label="Message"
-                                className="w-full px-4 py-2 rounded bg-[#23232a] border border-[#33343a] text-[#e5e7eb] focus:outline-none focus:ring-2 focus:ring-[#C0EA00]"
-                                value={notif.message}
-                                onChange={e => handleNotificationChange(notif.id, "message", e.target.value)}
-                              />
-                            </div>
-                            {/* Time input */}
-                            <input
-                              aria-label="Time"
-                              className="w-14 px-3 py-2 rounded-full border border-[#33343a] bg-[#23232a] text-[#bfae9b] font-semibold text-sm text-center focus:outline-none focus:ring-2 focus:ring-[#C0EA00]"
-                              value={notif.time}
-                              onChange={e => handleNotificationChange(notif.id, "time", e.target.value)}
-                            />
-                            {/* Delete button */}
-                            <button
-                              aria-label="Delete notification"
-                              className="flex items-center gap-1 text-[#C0EA00] hover:text-[#A5C900] text-base font-semibold ml-2 focus:outline-none"
-                              onClick={() => handleDeleteNotification(notif.id)}
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 7V5a2 2 0 00-2-2H7a2 2 0 00-2 2v2m5 4v6m4-6v6" /></svg>
-                              Delete
-                            </button>
-                          </li>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </ul>
-                )}
-              </Droppable>
-            </DragDropContext>
+            {/* dnd-kit DnD context */}
+            <DndContext
+              sensors={useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))}
+              collisionDetection={closestCenter}
+              onDragEnd={onDragEnd}
+            >
+              <SortableContext items={notifications.map(n => n.id.toString())} strategy={verticalListSortingStrategy}>
+                <ul className="w-full space-y-6">
+                  {notifications.map((notif, idx) => (
+                    <SortableNotification
+                      key={notif.id.toString()}
+                      notif={notif}
+                      idx={idx}
+                      onIconClick={handleIconClick}
+                      onNotificationChange={handleNotificationChange}
+                      onDeleteNotification={handleDeleteNotification}
+                      fileInputRefs={fileInputRefs}
+                      handleIconUpload={handleIconUpload}
+                    />
+                  ))}
+                </ul>
+              </SortableContext>
+            </DndContext>
           </section>
         </div>
         {/* Bottom: Snippet Generator */}

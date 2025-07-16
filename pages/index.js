@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import FeaturesListicle from "@/components/FeaturesListicle";
 import Testimonials3 from "@/components/Testimonials3";
 import NotReadySection from "@/components/NotReadySection";
+import FrictionSection from "@/components/FrictionSection";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         
         <NotReadySection />
         <FeaturesListicle />
+        <FrictionSection />
         <Testimonials3 />
         <Pricing />
         <FAQ />

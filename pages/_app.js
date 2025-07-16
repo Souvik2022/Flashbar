@@ -12,17 +12,17 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
 
   return (
     <ClerkProvider>
-      <QueryClientProvider client={queryClient}>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
-        {getLayout(
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        )}
-        <Analytics />
-      </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      {getLayout(
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      )}
+      <Analytics />
+    </QueryClientProvider>
     </ClerkProvider>
   );
 }

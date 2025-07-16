@@ -470,7 +470,7 @@ export default function Dashboard() {
                 {site.name}
               </button>
               {websites.length > 1 && (
-                <button
+        <button
                   aria-label={`Remove domain ${site.name}`}
                   className="absolute -right-2 -top-2 bg-[#23232a] border border-[#33343a] rounded-full w-6 h-6 flex items-center justify-center text-[#e5e7eb] hover:bg-[#C0EA00] hover:text-[#23232a] transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none z-10"
                   onClick={() => {
@@ -493,7 +493,7 @@ export default function Dashboard() {
                     }
                   }}
                   tabIndex={0}
-                  type="button"
+          type="button"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
@@ -570,7 +570,7 @@ export default function Dashboard() {
                   className="px-3 py-2 rounded-full bg-[#C0EA00] text-[#23232a] font-bold text-lg shadow hover:bg-[#A5C900] focus:outline-none focus:ring-2 focus:ring-[#C0EA00] transition"
                   style={{ minWidth: 0, width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   onClick={handleAddNotification}
-                >
+        >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                 </button>
                 <button
@@ -624,9 +624,9 @@ export default function Dashboard() {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16h8a2 2 0 002-2V8a2 2 0 00-2-2H8a2 2 0 00-2 2v6a2 2 0 002 2z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2" /></svg>
               <span className="ml-1 text-xs">Copy</span>
             </button>
-            {copied && (
+          {copied && (
               <span className="ml-2 text-[#C0EA00] text-xs font-semibold">Copied!</span>
-            )}
+          )}
           </div>
           <div className="mt-1 text-xs text-[#e5e7eb] flex items-center gap-1">
             <span className="text-lg">⚠️</span> Your Flashbar will not show until you add 1+ notifications and click Update.

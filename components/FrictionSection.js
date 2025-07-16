@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 
 export default function FrictionSection() {
-  const snippet = `<script defer src=\"https://flashbar.com/embed.js\"></script>`;
+  const snippet = `<script defer src="https://flashbar.com/embed.js"></script>`;
   const inputRef = useRef(null);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`<script defer src=\"https://flashbar.com/embed.js\"></script>`);
+    navigator.clipboard.writeText(`<script defer src="https://flashbar.com/embed.js"></script>`);
     // Optionally, show a copied message
   };
 
@@ -13,7 +13,7 @@ export default function FrictionSection() {
     <section className="py-6 px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
       {/* Heading and sub-paragraph */}
       <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 text-base-content mt-2">
-        Expose What’s Holding Visitors Back
+        Expose What is Holding Visitors Back
       </h2>
       <p className="mx-auto mb-10 text-base sm:text-lg text-base-content/80 max-w-xs sm:max-w-2xl">
         Most users bounce without saying a word.<br className="hidden sm:inline" />
@@ -57,7 +57,7 @@ export default function FrictionSection() {
           Paste this snippet in the <code>&lt;head&gt;</code> of your website.
         </div>
         <div className="bg-base-300 rounded-md px-4 py-3 flex items-center w-full justify-between font-mono text-sm text-base-content">
-          <span ref={inputRef}>{`<script defer src=\"https://flashbar.com/embed.js\"></script>`}</span>
+          <span ref={inputRef}>{`<script defer src="https://flashbar.com/embed.js"></script>`}</span>
           <button
             onClick={handleCopy}
             className="ml-4 bg-lime-300 text-black font-bold rounded px-4 py-2 hover:bg-lime-200 transition-colors"

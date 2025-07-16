@@ -630,9 +630,9 @@ export default function Dashboard() {
           </div>
           <div className="mt-1 text-xs text-[#e5e7eb] flex items-center gap-1">
             <span className="text-lg">⚠️</span> Your Flashbar will not show until you add 1+ notifications and click Update.
-          </div>
-        </section>
       </div>
+    </section>
+    </div>
     </main>
   );
 }
